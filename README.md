@@ -1,67 +1,31 @@
 Compare different kinds of performSelector: and GCD execute timing in UIViewController lifeCycle
 
-#import "ViewController.h"
 
-
-#define type 0
-
-@implementation ViewController
-
-- (void)viewDidLoad {
-[super viewDidLoad];
-NSLog(@"viewDidLoad");
-
-SEL sel = @selector(print);
-
-#if type == 0
 [self performSelector:sel];
 
-#elif type == 1
 [self performSelector:sel withObject:nil];
 
-#elif type == 2
 [self performSelector:sel withObject:nil afterDelay:0.0];
 
-#elif type == 3
 [self performSelectorOnMainThread:sel withObject:nil waitUntilDone:NO];
 
-#elif type == 4
 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 [self print];
 });
 
-#elif type == 5
 dispatch_async(dispatch_get_main_queue(), ^{
 [self print];
 });
 
-#elif type == 6
 // will lock forever
 dispatch_sync(dispatch_get_main_queue(), ^{
 [self print];
 });
 
-#endif
-}
-
 - (void)print
 {
 NSLog(@"++++++++ type %d +++++++++", type);
 }
-
-- (void)viewWillAppear:(BOOL)animated
-{
-[super viewWillAppear:animated];
-NSLog(@"viewWillAppear");
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-[super viewDidAppear:animated];
-NSLog(@"viewDidAppear");
-}
-
-@end
 
 ———————————————————————splendid seperator—————————————————
 
