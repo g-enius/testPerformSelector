@@ -1,4 +1,4 @@
-Compare different kinds of performSelector: and GCD execute timing in UIViewController lifeCycle
+# Compare different kinds of performSelector: and GCD execute timing in UIViewController lifeCycle
 
 
 [self performSelector:sel];
@@ -18,6 +18,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 });
 
 // will lock forever
+
 dispatch_sync(dispatch_get_main_queue(), ^{
 [self print];
 });
